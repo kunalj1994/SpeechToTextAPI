@@ -1,0 +1,31 @@
+﻿body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.outer-page {
+    height: auto;
+    width: auto;
+    background-color: #f5f5f5;
+    border: 1px solid black;
+    padding: 100px;
+}
+
+.inner-page{
+    height: 400px;
+    line-height: 400px;
+    width: auto;
+    border: 1px solid rgba(58, 58, 58, 0.438);
+    background-color: #f5f5f5;
+    text-align: center;
+    
+}
+.upload-button{
+    cursor: pointer;
+    background-color: rgb(5, 168, 26);
+    padding: 10px;
+}
+
+.hidden{
+    display: none;
+}
