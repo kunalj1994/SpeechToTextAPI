@@ -61,9 +61,8 @@ router.post('/uploadFile', function (req, res) {
 });
 
 
-// router.get('/getFile', function (req, res) {
-// 	var blobService = azure.createBlobService();
+router.get('/getFile', function (req, res) {
+	res.send({'myName': 'SpeechToText'});
 	
-	
-// });
+});
 module.exports = router;
