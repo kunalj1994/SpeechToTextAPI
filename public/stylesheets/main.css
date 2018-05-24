@@ -29,3 +29,44 @@
 .hidden{
     display: none;
 }
+
+.score-table{
+    width:100%;
+    margin-top: 14px;
+    background-color: #fff;
+    
+}
+
+.score-table th{
+    background-color: rgba(0, 77, 134, 1);
+    font-size: 18px !important;
+    vertical-align: middle;
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    color: #fff;
+}
+
+.score-table tr:first-child td{
+    padding-top: 10px; 
+    
+}
+.score-table td{
+    text-align: center;
+    padding-bottom: 10px; 
+
+}
+.outer-table-page{
+    padding: 15px;
+    width: auto;
+    height: auto;
+    border: 1px solid black;
+    background-color: rgb(189, 215, 238);
+}
+
+.score-label{
+    font-size: 18px;
+}
+
+/* .score-table tr:nth-child(even) {
+    background-color: #dddddd;
+} */

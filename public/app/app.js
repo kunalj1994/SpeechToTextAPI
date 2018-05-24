@@ -1,1 +1,1 @@
-var app = angular.module("SpeechToText", ['ngFileUpload']);
+var app = angular.module("SpeechToText", ['ngFileUpload', 'angularSpinner']);

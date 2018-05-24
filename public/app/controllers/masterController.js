@@ -1,5 +1,8 @@
-app.controller('masterCtrl', function($scope, Upload) {
+app.controller('masterCtrl', function($scope, Upload, $timeout) {
 
+	$scope.uploadForm = true;
+	$scope.spinner = false;
+	
 	// $scope.uploader.onAfterAddingFile = function(){
 	// 	for(var i = 0; i < $scope.uploader.queue.length; i++){
 	// 		console.log($scope.uploader.queue[i]);
@@ -19,25 +22,22 @@ app.controller('masterCtrl', function($scope, Upload) {
 	// }
 
 	$scope.upload = function(file){
-		console.log(file);
-		var name = file.name.split(".")[0];
-		var type = file.type;
-		console.log(name);
-		console.log(type);
-		
-		
+		$scope.spinner = true;
 		Upload.upload({
 			url: '/uploadFile',
 			method: 'POST',
-			data: { name: name, type: type },
-			files: file
+			file: file
 		}).then(function(response){
-			console.log(response.config.data.file.name);
+			$timeout(function(){
+				$scope.spinner = false;
+				$scope.uploadForm = false;
+				$scope.speechScore = true;
+				$scope.calculatedScore = response.data;
+			}, 2000);
 		}, function(err){
 			console.log(err);
 			
 		}, function(evt){
-			console.log(evt.loaded);
 			
 		});
 	}

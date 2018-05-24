@@ -9,11 +9,12 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var multipart = require('connect-multiparty');
-
+process.env['AZURE_STORAGE_ACCOUNT'] = 'sttibmstorage3';
+process.env['AZURE_STORAGE_ACCESS_KEY'] = 'tKFzopnvKQsuPvcAHCs9N8DACDDQKPKA1AumHbEQ+yBxW1YWAFb5bEBNVe80J8pfOJwsqvjWsEhwO3q9cF8CaA==';
+// var multipart = require('connect-multiparty');
 var app = express();
 // app.use(multipart({
-// 	uploadDir: '/'
+// 	uploadDir: './'
 // }));
 app.engine('html', require('ejs').renderFile);
 // view engine setup
