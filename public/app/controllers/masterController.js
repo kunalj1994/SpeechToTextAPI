@@ -22,17 +22,19 @@ app.controller('masterCtrl', function($scope, Upload, $timeout) {
 	// }
 
 	$scope.upload = function(file){
-		$scope.spinner = true;
+		// $scope.spinner = true;
 		Upload.upload({
 			url: '/uploadFile',
 			method: 'POST',
 			file: file
 		}).then(function(response){
 			$timeout(function(){
-				$scope.spinner = false;
-				$scope.uploadForm = false;
-				$scope.speechScore = true;
-				$scope.calculatedScore = response.data;
+				console.log(response.data);
+				
+				// $scope.spinner = false;
+				// $scope.uploadForm = false;
+				// $scope.speechScore = true;
+				// $scope.calculatedScore = response.data;
 			}, 2000);
 		}, function(err){
 			console.log(err);
