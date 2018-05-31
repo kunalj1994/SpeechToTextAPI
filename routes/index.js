@@ -3,9 +3,6 @@
 var express = require('express');
 
 var router = express.Router();
-
-// var formidable = require('formidable');
-
 var multiparty = require('multiparty');
 
 var azure = require('azure');
@@ -13,31 +10,21 @@ var azure = require('azure');
 var csv = require('csvtojson');
 
 var fs = require('fs');
-
 var request = require('request');
-
 /* GET home page. */
-
-router.get('/', function (req, res) {
-
+router.get('/analyze', function (req, res) {
     res.render('index.html');
 
 });
 
-
-
+router.get('/', function (req, res) {
+    res.render('homePage.html');
+});
 
 router.post('/uploadFile', function (req, res) {
-
-
-
-
     var form = new multiparty.Form();
 
     form.parse(req, function(err, fields, file){
-
-        console.log(file);
-
         var oldPath = file.file[0].path;
 
         console.log(oldPath);
@@ -45,86 +32,44 @@ router.post('/uploadFile', function (req, res) {
         var newPath = './recordings/' + file.file[0].originalFilename;
 
         fs.rename(oldPath, newPath, function(err){
-
             if(err){
-
                 throw err;
-
             }
-
-
-
-
             request('http://localhost:8080/convert', function(err, response, body){
-
               console.log('executed');
-
               if(err){
-
                 console.log(err);
-
               }
-
               else{
-
                 console.log('convert=======');console.log(body);
-
                 request('http://localhost:8000/trigger', function(err, response, body) {
-
                   if(err){
-
                     console.log('grammar======='); console.log(err);
-
                   }
-
                   else{
-
                     console.log('grammar=======');console.log(body);
-
                     request('http://localhost:64514/api/Default', function(err, response, body){
-
                       if(err){
-
                         console.log('polarity======='); console.log(err);
-
                       }
-
                       else{
-
                         console.log('polarity=======');console.log(body);
-
                         request('http://localhost:63445/api/Default', function(err, response, body){
-
                           if(err){
-
                             console.log('text to speech======='); console.log(err);
-
                           }
-
                           else{
-
                             console.log('text to speech=======');console.log(body);
-
                             res.send("Uploaded");
-
                           }
-
                         });
-
                       }
-
                     });
-
                   }
-
                 });
-
               }
-
             });
-
         });
-
     });
 
 

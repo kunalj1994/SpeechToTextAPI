@@ -1,7 +1,8 @@
-app.controller('masterCtrl', function($scope, Upload, $timeout) {
+app.controller('masterCtrl', function($scope, Upload) {
 
 	$scope.uploadForm = true;
-	$scope.spinner = false;
+	$scope.sttSpinner = false;
+	$scope.featureSpinner = false;
 	
 	// $scope.uploader.onAfterAddingFile = function(){
 	// 	for(var i = 0; i < $scope.uploader.queue.length; i++){
@@ -22,25 +23,51 @@ app.controller('masterCtrl', function($scope, Upload, $timeout) {
 	// }
 
 	$scope.upload = function(file){
-		// $scope.spinner = true;
-		Upload.upload({
-			url: '/uploadFile',
-			method: 'POST',
-			file: file
-		}).then(function(response){
-			$timeout(function(){
+		if(file){
+			console.log(file);
+			
+			$scope.loadingPage = true;
+			$scope.uploadForm = false;
+			$scope.sttSpinner = true;
+			$scope.uploadFiles = [];
+			for(var i = 0; i <file.length; i++){
+				var fileMetadata = {
+					name: file[i].name,
+					size: formatBytes(file[i].size)
+				}
+				$scope.uploadFiles.push(fileMetadata);
+			}
+			Upload.upload({
+				url: '/uploadFile',
+				method: 'POST',
+				file: file[0]
+			}).then(function(response){
 				console.log(response.data);
-				
-				// $scope.spinner = false;
+				$scope.sttSpinner = false;
+				$scope.checkMark = true;
 				// $scope.uploadForm = false;
 				// $scope.speechScore = true;
 				// $scope.calculatedScore = response.data;
-			}, 2000);
-		}, function(err){
-			console.log(err);
-			
-		}, function(evt){
-			
-		});
+			}, function(err){
+				console.log(err);
+				
+			}, function(evt){
+				console.log(evt);
+				
+			});
+		}
 	}
+
+	$scope.runFeatures = function(){
+		
+	}
+
+	function formatBytes(bytes,decimals) {
+		if(bytes == 0) return '0 Bytes';
+		var k = 1024,
+			dm = decimals || 2,
+			sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+			i = Math.floor(Math.log(bytes) / Math.log(k));
+		return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+	 }
 });
