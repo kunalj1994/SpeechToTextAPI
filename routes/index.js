@@ -1,29 +1,37 @@
 ﻿'use strict';
 var express = require('express');
 var router = express.Router();
-// var formidable = require('formidable');
 var multiparty = require('multiparty');
 var azure = require('azure');
 var csv = require('csvtojson');
 var fs = require('fs');
+var request = require('request');
 /* GET home page. */
-router.get('/', function (req, res) {
+router.get('/analyze', function (req, res) {
     res.render('index.html');
 });
 
+router.get('/', function (req, res) {
+    res.render('homePage.html');
+});
+
 router.post('/uploadFile', function (req, res) {
-    
     var form = new multiparty.Form();
     form.parse(req, function(err, fields, file){
-        console.log(file);
-        console.log(oldPath);
         var oldPath = file.file[0].path;
         var newPath = './' + file.file[0].originalFilename;
         fs.rename(oldPath, newPath, function(err){
             if(err){
                 throw err;
             }
-            res.send("Uploaded");
+            request('http://localhost:8080/convert', function(err, response, body){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.send("Uploaded");
+                }
+            });
         });
     });
     

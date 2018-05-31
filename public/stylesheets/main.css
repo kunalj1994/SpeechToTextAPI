@@ -1,29 +1,45 @@
-﻿body {
+﻿html{
+    background: linear-gradient(black, #003366);
+    background-repeat: no-repeat;
+    height: 100%;
+    /* color: aliceblue; */
+}
+
+body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 .outer-page {
     height: auto;
-    width: auto;
+    width: 80%;
     background-color: #f5f5f5;
     border: 1px solid black;
     padding: 100px;
+    margin: 0 auto;
 }
 
 .inner-page{
-    height: 400px;
-    line-height: 400px;
+    height: 200px;
+    line-height: 200px;
     width: auto;
     border: 1px solid rgba(58, 58, 58, 0.438);
     background-color: #f5f5f5;
     text-align: center;
     
 }
+
+.upload-label{
+    font-size: 24px;
+    font-weight: 500;
+    position: relative;
+    bottom: 20px;
+}
+
 .upload-button{
     cursor: pointer;
     background-color: rgb(5, 168, 26);
-    padding: 10px;
+    padding: 20px;
 }
 
 .hidden{
@@ -31,8 +47,8 @@
 }
 
 .score-table{
-    width:100%;
     margin-top: 14px;
+    width:100%;
     background-color: #fff;
     
 }
@@ -64,9 +80,56 @@
 }
 
 .score-label{
-    font-size: 18px;
+    font-weight: 500;
+    font-size: 24px;
 }
 
+.loading-table{
+    width:100%;
+    background-color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 20px;
+}
+
+.loading-label{
+    position: relative;
+    bottom: 20px;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.loading-table tr:first-child td{
+    padding-top: 10px; 
+    
+}
+.loading-table td{
+    text-align: center;
+    padding-bottom: 20px; 
+
+}
+
+.spinner{
+    position: relative;
+    top: 20px;
+    left: 110px;
+}
+
+.check{
+    width: 26px;
+    height: 26px;
+}
+
+.move-left{
+    left: 150px;
+}
+
+.poition-button{
+    float: right;
+    position: relative;
+    top: 30px;
+    padding: 20px;
+}
 /* .score-table tr:nth-child(even) {
     background-color: #dddddd;
 } */

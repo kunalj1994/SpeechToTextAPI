@@ -20,6 +20,7 @@
     "morgan": "^1.7.0",
     "multiparty": "^4.1.4",
     "python-shell": "^0.5.0",
+    "request": "^2.87.0",
     "serve-favicon": "^2.3.0"
   }
 }
