@@ -1,4 +1,4 @@
-app.controller('masterCtrl', function($scope, Upload) {
+app.controller('masterCtrl', function($scope, Upload, masterService, $q) {
 
 	$scope.uploadForm = true;
 	$scope.sttSpinner = false;
@@ -30,9 +30,9 @@ app.controller('masterCtrl', function($scope, Upload) {
 			$scope.uploadForm = false;
 			$scope.sttSpinner = true;
 			$scope.uploadFiles = [];
-			for(var i = 0; i <file.length; i++){
+			for(var i = 0; i < file.length; i++){
 				var fileMetadata = {
-					name: file[i].name,
+					name: file[i].name.split(".")[0],
 					size: formatBytes(file[i].size)
 				}
 				$scope.uploadFiles.push(fileMetadata);
@@ -59,9 +59,83 @@ app.controller('masterCtrl', function($scope, Upload) {
 	}
 
 	$scope.runFeatures = function(){
-		
+		var newArr = [];
+		$q.all([
+			calculateFluency(),
+			calculatePolarity(),
+			calculateGrammar()
+		]).then(function (responseArr) {
+			console.log(responseArr);
+			
+			$scope.featureSpinner = false;
+			$scope.fluencySpinner = false;
+			var fluencyScore = responseArr[0];
+			var polarityScore = responseArr[1];
+			var grammarScore = responseArr[2];
+			console.log(fluencyScore[0]);
+			console.log(polarityScore[0]);
+			console.log(grammarScore[0]);
+			
+			for (var i = 0; i < $scope.uploadFiles.length; i++) {
+				if ($scope.uploadFiles[i].name === fluencyScore[i].name && $scope.uploadFiles[i].name === polarityScore[i].name && $scope.uploadFiles[i].name === grammarScore[i].name) {
+					
+					newArr.push({
+						name: $scope.uploadFiles[i].name, 
+						size: $scope.uploadFiles[i].size, 
+						fluencyScore: fluencyScore[i].score,
+						polarityScore: polarityScore[i].score,
+						grammarScore: grammarScore[i].score
+					});
+				}
+			}
+			$scope.uploadFiles = newArr;
+		});
+		// calculatePolarity();
 	}
 
+	function calculateGrammar() {
+		$scope.featureSpinner = true;
+		var path = '/grammar'; 
+		return masterService.calculate(path);
+		// .then(function(d) {
+		// 	console.log(d);
+			
+		// });
+	}
+
+	function calculateFluency() {
+		var path = '/fluency'; 
+		$scope.fluencySpinner = true;
+		// var newArr = [];
+		return masterService.calculate(path);
+		// .then(function(d) {
+		// 	console.log(d);
+			
+		
+		// 	console.log(newArr);
+			
+		// });
+	}
+
+	function calculatePolarity() {
+		var path = '/polarity'; 
+		return masterService.calculate(path);
+		// .then(function(d) {
+		// 	console.log(d);
+			
+		// });
+	}
+
+	$scope.predictModel = function(){
+		var path = '/predict';
+		$scope.scoreSpinner = true;
+		masterService.calculate(path).then(function(d){
+			$scope.scoreSpinner = false;
+			$scope.loadingPage = false;
+			$scope.speechScore = true;
+			$scope.calculatedScore = d;
+		});
+	}
 	function formatBytes(bytes,decimals) {
 		if(bytes == 0) return '0 Bytes';
 		var k = 1024,

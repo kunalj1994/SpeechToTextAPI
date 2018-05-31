@@ -11,6 +11,7 @@
     <script src="/lib/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
     <script src="/lib/bower_components/angular-spinner/dist/angular-spinner.min.js"></script>
     <script src="/app/app.js"></script>
+    <script src="/app/services/masterService.js"></script>
     <script src="/app/controllers/masterController.js"></script>
 </head>
 <body ng-app="SpeechToText">
@@ -49,26 +50,30 @@
                             <td class="right-align">{{f.size}}</td>
                             <td>
                                 <span ng-if="sttSpinner" class="spinner move-left" us-spinner="{radius:10, width:3, length: 6}"></span>
-                                <img src="/lib/images/correct-symbol.svg" ng-if="checkMark" class="check move-left"></img>
+                                <img src="/lib/images/correct-symbol.svg" ng-if="checkMark" class="check move-left" />
                             </td>
                             <td>
                                 <span ng-if="featureSpinner" class="spinner" us-spinner="{radius:10, width:3, length: 6}"></span>
+                                {{f.polarityScore}}
                             </td>
                             <td>
                                 <span ng-if="featureSpinner" class="spinner" us-spinner="{radius:10, width:3, length: 6}"></span>
+                                {{f.grammarScore}}
                             </td>   
                             <td>
-                                <span ng-if="featureSpinner" class="spinner" us-spinner="{radius:10, width:3, length: 6}"></span>
+                                <span ng-if="fluencySpinner" class="spinner" us-spinner="{radius:10, width:3, length: 6}"></span>
+                                {{f.fluencyScore}}
                             </td> 
                         </tr>
                     </tbody>
                 </table>
-                <label class="upload-button poition-button">Calculate Features</label>
+                <label ng-click="runFeatures()" class="upload-button position-button">Calculate Features</label>
+                <label ng-click="predictModel()" class="upload-button position-button predict">Predict Model</label>
             </div>
         <!-- </div> -->
-        <!-- <span ng-if="spinner" us-spinner="{radius:30, width:8, length: 16}"></span> -->
         <!-- <span></span> -->
-
+        
+        <span ng-if="scoreSpinner" us-spinner="{radius:30, width:8, length: 16}"></span>
         <div class="outer-table-page" ng-show="speechScore">
             <label class="score-label">Smart Speech Score</label>
             <table class="score-table">
@@ -80,13 +85,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="data in calculatedScore | limitTo: 1">
+                    <tr ng-repeat="data in calculatedScore">
                         <td>{{data.fileName}}</td>
                         <td>{{data.actualGrade}}</td>
                         <td>{{data.predictedGrade}}</td>
                     </tr>
                 </tbody>
             </table>
+            <!-- <label ng-click="goBack()" class="upload-button back">Go Back</label> -->
+            
         </div>
     </div>
 </body>

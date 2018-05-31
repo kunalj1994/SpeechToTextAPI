@@ -34,12 +34,23 @@ body {
     font-weight: 500;
     position: relative;
     bottom: 20px;
+    color: #f5f5f5;
+    
 }
 
 .upload-button{
+    font-size: 20px;
     cursor: pointer;
-    background-color: rgb(5, 168, 26);
-    padding: 20px;
+    text-decoration: none;
+    /*background-color: grey; 
+    color: white; */
+    border: 1px solid black;
+    padding: 20px 30px;
+    color: #404040;
+    background-color: #808080;
+    text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+    /* background-color: rgb(5, 168, 26);
+    padding: 20px; */
 }
 
 .hidden{
@@ -90,6 +101,7 @@ body {
     font-size: 20px;
     font-weight: 400;
     padding: 20px;
+    min-height: 150px;
 }
 
 .loading-label{
@@ -97,6 +109,7 @@ body {
     bottom: 20px;
     font-size: 24px;
     font-weight: 500;
+    color: #f5f5f5;
 }
 
 .loading-table tr:first-child td{
@@ -124,12 +137,18 @@ body {
     left: 150px;
 }
 
-.poition-button{
+.position-button{
     float: right;
     position: relative;
     top: 30px;
     padding: 20px;
 }
+
+.predict{
+    right: 10px;
+}
+
+
 /* .score-table tr:nth-child(even) {
     background-color: #dddddd;
 } */
