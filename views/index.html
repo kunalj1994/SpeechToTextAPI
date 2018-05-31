@@ -15,14 +15,25 @@
     <script src="/app/controllers/masterController.js"></script>
 </head>
 <body ng-app="SpeechToText">
+    <div class="terawe-logo">
+        <img src="/lib/images/teraweLogo.png" />
+    </div>
     <div ng-controller="masterCtrl">
-        <!-- <div class="home-page">
-            <img src="/lib/images/teraweLogo.png" />
-        </div> -->
         <!-- <div class="outer-page" ng-hide="speechScore"> -->
             <label class="upload-label" ng-show="uploadForm">Please upload audio files: </label>
             <div class="inner-page" ng-show="uploadForm">
-                <label class="upload-button" ngf-select="upload($files)" multiple="multiple">Select files from your computer</label>
+                    <div class="drag-drop">
+                        <div class="drop-files" ngf-drop="upload($files)" ngf-drag-over-class="'dragover'" ngf-multiple="true">
+                            <span class="upload-text">
+                            <img class="upload-icon" src="/lib/images/upload.svg" width="26" height="26" />
+                                Drop files here
+                            </span>
+                        </div>
+                        <!-- <label class="button" ngf-select="upload($files)" multiple="multiple">Select files from your computer</label> -->
+                    </div>
+                    <div class="upload">
+                    <label class="button" ngf-select="upload($files)" multiple="multiple">Select files from your computer</label>
+                </div>
                 <!-- <form action="/uploadFile" method="post" enctype="multipart/form-data"> 
                     <label for="uploadFiles" class="upload-button">Select a file from  computer</label>
                     <input id="uploadFiles" class="hidden" type="file" name="snapshot" /> 
@@ -49,26 +60,26 @@
                             <td>{{f.name}}</td>
                             <td class="right-align">{{f.size}}</td>
                             <td>
-                                <span ng-if="sttSpinner" class="spinner move-left" us-spinner="{radius:10, width:3, length: 6}"></span>
+                                <span ng-if="sttSpinner" class="spinner move-left" us-spinner="{radius:8, width:3, length: 6}"></span>
                                 <img src="/lib/images/correct-symbol.svg" ng-if="checkMark" class="check move-left" />
                             </td>
                             <td>
-                                <span ng-if="featureSpinner" class="spinner" us-spinner="{radius:10, width:3, length: 6}"></span>
+                                <span ng-if="featureSpinner" class="spinner" us-spinner="{radius:8, width:3, length: 6}"></span>
                                 {{f.polarityScore}}
                             </td>
                             <td>
-                                <span ng-if="featureSpinner" class="spinner" us-spinner="{radius:10, width:3, length: 6}"></span>
+                                <span ng-if="featureSpinner" class="spinner" us-spinner="{radius:8, width:3, length: 6}"></span>
                                 {{f.grammarScore}}
                             </td>   
                             <td>
-                                <span ng-if="fluencySpinner" class="spinner" us-spinner="{radius:10, width:3, length: 6}"></span>
+                                <span ng-if="fluencySpinner" class="spinner" us-spinner="{radius:8, width:3, length: 6}"></span>
                                 {{f.fluencyScore}}
                             </td> 
                         </tr>
                     </tbody>
                 </table>
-                <label ng-click="runFeatures()" class="upload-button position-button">Calculate Features</label>
-                <label ng-click="predictModel()" class="upload-button position-button predict">Predict Model</label>
+                <label ng-click="runFeatures()" class="button position-button">Calculate Features</label>
+                <label ng-click="predictModel()" class="button position-button predict">Predict Model</label>
             </div>
         <!-- </div> -->
         <!-- <span></span> -->
@@ -80,6 +91,9 @@
                 <thead>
                     <tr>
                         <th>File Name</th>
+                        <th>Polarity</th>
+                        <th>Grammar</th>
+                        <th>Fluency</th>
                         <th>Actual Grade</th>
                         <th>Predicted Grade</th>
                     </tr>
@@ -87,13 +101,19 @@
                 <tbody>
                     <tr ng-repeat="data in calculatedScore">
                         <td>{{data.fileName}}</td>
+                        <td>{{uploadFiles[$index].polarityScore}}</td>
+                        <td>{{uploadFiles[$index].grammarScore}}</td>
+                        <td>{{uploadFiles[$index].fluencyScore}}</td>
                         <td>{{data.actualGrade}}</td>
-                        <td>{{data.predictedGrade}}</td>
+                        <td ng-init="stopGradeSpinner(data, $index)">
+                        <span ng-if="!data.gradeSpinner" class="spinner move-left" us-spinner="{radius:8, width:3, length: 6}"></span>
+                        <span ng-if="data.gradeSpinner">{{data.predictedGrade}}</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <!-- <label ng-click="goBack()" class="upload-button back">Go Back</label> -->
-            
+            <span class="probability">Average Probability: 84.7%</span>
+            <label ng-click="goBack()" class="button back">Go Back</label>
         </div>
     </div>
 </body>

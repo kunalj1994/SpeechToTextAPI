@@ -1,4 +1,4 @@
-app.controller('masterCtrl', function($scope, Upload, masterService, $q) {
+app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeout) {
 
 	$scope.uploadForm = true;
 	$scope.sttSpinner = false;
@@ -23,9 +23,8 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q) {
 	// }
 
 	$scope.upload = function(file){
-		if(file){
+		if(file && file.length != 0){
 			console.log(file);
-			
 			$scope.loadingPage = true;
 			$scope.uploadForm = false;
 			$scope.sttSpinner = true;
@@ -52,7 +51,7 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q) {
 				console.log(err);
 				
 			}, function(evt){
-				console.log(evt);
+				// console.log(evt);
 				
 			});
 		}
@@ -65,30 +64,27 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q) {
 			calculatePolarity(),
 			calculateGrammar()
 		]).then(function (responseArr) {
-			console.log(responseArr);
-			
-			$scope.featureSpinner = false;
-			$scope.fluencySpinner = false;
-			var fluencyScore = responseArr[0];
-			var polarityScore = responseArr[1];
-			var grammarScore = responseArr[2];
-			console.log(fluencyScore[0]);
-			console.log(polarityScore[0]);
-			console.log(grammarScore[0]);
-			
-			for (var i = 0; i < $scope.uploadFiles.length; i++) {
-				if ($scope.uploadFiles[i].name === fluencyScore[i].name && $scope.uploadFiles[i].name === polarityScore[i].name && $scope.uploadFiles[i].name === grammarScore[i].name) {
-					
-					newArr.push({
-						name: $scope.uploadFiles[i].name, 
-						size: $scope.uploadFiles[i].size, 
-						fluencyScore: fluencyScore[i].score,
-						polarityScore: polarityScore[i].score,
-						grammarScore: grammarScore[i].score
-					});
+			$timeout(function(){	
+				$scope.featureSpinner = false;
+				$scope.fluencySpinner = false;
+				var fluencyScore = responseArr[0];
+				var polarityScore = responseArr[1];
+				var grammarScore = responseArr[2];
+				
+				for (var i = 0; i < $scope.uploadFiles.length; i++) {
+					if ($scope.uploadFiles[i].name === fluencyScore[i].name && $scope.uploadFiles[i].name === polarityScore[i].name && $scope.uploadFiles[i].name === grammarScore[i].name) {
+						
+						newArr.push({
+							name: $scope.uploadFiles[i].name, 
+							size: $scope.uploadFiles[i].size, 
+							fluencyScore: fluencyScore[i].score,
+							polarityScore: polarityScore[i].score,
+							grammarScore: grammarScore[i].score
+						});
+					}
 				}
-			}
-			$scope.uploadFiles = newArr;
+				$scope.uploadFiles = newArr;
+			}, 1500);
 		});
 		// calculatePolarity();
 	}
@@ -136,6 +132,20 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q) {
 			$scope.calculatedScore = d;
 		});
 	}
+
+	$scope.stopGradeSpinner = function(data, i){
+		var timeout = (i + 1) * 1000;
+		$timeout(function(){
+			data.gradeSpinner = true;
+		}, timeout);
+	}
+
+	$scope.goBack = function(){
+		$scope.speechScore = false;
+		$scope.uploadForm = true;
+		$scope.checkMark = false;
+	}
+
 	function formatBytes(bytes,decimals) {
 		if(bytes == 0) return '0 Bytes';
 		var k = 1024,

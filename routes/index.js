@@ -46,7 +46,6 @@ router.post('/uploadFile', function (req, res) {
 
 router.get('/predict', function(req, res){
     csv().fromFile('./predict.csv').then(function (jsonObj) {
-        console.log(jsonObj);
         res.send(jsonObj);
     });
 });
