@@ -96,10 +96,11 @@
                         <th>Fluency</th>
                         <th>Actual Grade</th>
                         <th>Predicted Grade</th>
+                        <th>Sanity Check</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="data in calculatedScore">
+                    <tr ng-style="data.failedRow" ng-repeat="data in calculatedScore">
                         <td>{{data.fileName}}</td>
                         <td>{{uploadFiles[$index].polarityScore}}</td>
                         <td>{{uploadFiles[$index].grammarScore}}</td>
@@ -108,6 +109,9 @@
                         <td ng-init="stopGradeSpinner(data, $index)">
                         <span ng-if="!data.gradeSpinner" class="spinner move-left" us-spinner="{radius:8, width:3, length: 6}"></span>
                         <span ng-if="data.gradeSpinner">{{data.predictedGrade}}</span>
+                        </td>
+                        <td>
+                            <img ng-show="data.passed" src="/lib/images/correct-symbol.svg" class="check move-left" />
                         </td>
                     </tr>
                 </tbody>

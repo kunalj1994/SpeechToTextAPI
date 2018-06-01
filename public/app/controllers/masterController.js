@@ -70,23 +70,36 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 				var fluencyScore = responseArr[0];
 				var polarityScore = responseArr[1];
 				var grammarScore = responseArr[2];
-				
-				for (var i = 0; i < $scope.uploadFiles.length; i++) {
-					if ($scope.uploadFiles[i].name === fluencyScore[i].name && $scope.uploadFiles[i].name === polarityScore[i].name && $scope.uploadFiles[i].name === grammarScore[i].name) {
+				mergeArrays($scope.uploadFiles, fluencyScore);
+				// for (var i = 0; i < $scope.uploadFiles.length; i++) {
+				// 	if ($scope.uploadFiles[i].name === fluencyScore[i].name && $scope.uploadFiles[i].name === polarityScore[i].name && $scope.uploadFiles[i].name === grammarScore[i].name) {
 						
-						newArr.push({
-							name: $scope.uploadFiles[i].name, 
-							size: $scope.uploadFiles[i].size, 
-							fluencyScore: fluencyScore[i].score,
-							polarityScore: polarityScore[i].score,
-							grammarScore: grammarScore[i].score
-						});
-					}
-				}
+				// 		newArr.push({
+				// 			name: $scope.uploadFiles[i].name, 
+				// 			size: $scope.uploadFiles[i].size, 
+				// 			fluencyScore: fluencyScore[i].score,
+				// 			polarityScore: polarityScore[i].score,
+				// 			grammarScore: grammarScore[i].score
+				// 		});
+				// 	}
+				// }
 				$scope.uploadFiles = newArr;
 			}, 1500);
 		});
 		// calculatePolarity();
+	}
+
+	function mergeArrays(arr1, arr2){
+		var newArr = [];
+		for(var i = 0; i < arr1.length; i++){
+			for(var j = 0; j < arr2.length; j++){
+				if(arr1.name === arr2.name){
+					newArr.push(angular.extend({}, arr1, arr2));
+					console.log(newArr);
+					
+				}
+			}
+		}
 	}
 
 	function calculateGrammar() {
@@ -137,6 +150,15 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 		var timeout = (i + 1) * 1000;
 		$timeout(function(){
 			data.gradeSpinner = true;
+			if((data.actualGrade >= 3 && data.predictedGrade >= 3) || (data.actualGrade < 3 && data.predictedGrade < 3)){
+				data.passed = true;
+			}
+			else{
+				data.failedRow = {
+					'background-color': 'red',
+					'border-color': 'red'
+				}
+			}
 		}, timeout);
 	}
 
