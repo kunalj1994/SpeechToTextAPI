@@ -25,9 +25,11 @@ body {
 }
 
 .inner-page{
-    height: 200px;
-    line-height: 200px;
+    /* height: 200px;
+    line-height: 200px; */
     width: auto;
+    padding-bottom: 20px;
+    padding-top: 20px;
     border: 1px solid rgba(58, 58, 58, 0.438);
     background-color: #f5f5f5;
     text-align: center;
@@ -49,9 +51,11 @@ body {
     text-decoration: none;
     border: 1px solid black;
     padding: 20px 30px;
-    color: rgb(64, 64, 64);
-    background-color: #808080;
-    text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+    color: black;
+    /* color: rgb(64, 64, 64); #1aff1a */
+    background-color: #1aff1a; 
+    /* background-color: #808080; 1aff1a */
+    /* text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7); */
 }
 
 .upload{
@@ -163,8 +167,8 @@ body {
 
 .spinner{
     position: relative;
-    top: 20px;
-    left: 110px;
+    /* top: 20px; */
+    /* left: 110px; */
 }
 
 .check{
@@ -191,13 +195,23 @@ body {
     position: relative;
     font-size: 20px;
     font-weight: 500;
-    top: 8px;
+    top: 4.6em;
+    left: 35em;
+    background-color: #1aff1a;
+    /* color: #f5f5f5; */
+    padding: 20px;
+    border: 1px solid black;
 }
 
 .back{
     position: relative;
-    top: 3.5em;
-    right: 13em;
+    top: 4.6em;
+    right: 14em;
+}
+
+.disabled{
+    background-color: #808080;
+    cursor: not-allowed !important;
 }
 /* .score-table tr:nth-child(even) {
     background-color: #dddddd;
