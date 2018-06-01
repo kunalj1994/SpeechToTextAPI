@@ -24,7 +24,6 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 
 	$scope.upload = function(file){
 		if(file && file.length != 0){
-			console.log(file);
 			$scope.loadingPage = true;
 			$scope.uploadForm = false;
 			$scope.sttSpinner = true;
@@ -58,7 +57,6 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 	}
 
 	$scope.runFeatures = function(){
-		var newArr = [];
 		$q.all([
 			calculateFluency(),
 			calculatePolarity(),
@@ -71,19 +69,9 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 				var polarityScore = responseArr[1];
 				var grammarScore = responseArr[2];
 				mergeArrays($scope.uploadFiles, fluencyScore);
-				// for (var i = 0; i < $scope.uploadFiles.length; i++) {
-				// 	if ($scope.uploadFiles[i].name === fluencyScore[i].name && $scope.uploadFiles[i].name === polarityScore[i].name && $scope.uploadFiles[i].name === grammarScore[i].name) {
-						
-				// 		newArr.push({
-				// 			name: $scope.uploadFiles[i].name, 
-				// 			size: $scope.uploadFiles[i].size, 
-				// 			fluencyScore: fluencyScore[i].score,
-				// 			polarityScore: polarityScore[i].score,
-				// 			grammarScore: grammarScore[i].score
-				// 		});
-				// 	}
-				// }
-				$scope.uploadFiles = newArr;
+				mergeArrays($scope.uploadFiles, polarityScore);
+				mergeArrays($scope.uploadFiles, grammarScore);
+				$scope.enablePrediction = true;
 			}, 1500);
 		});
 		// calculatePolarity();
@@ -93,13 +81,12 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 		var newArr = [];
 		for(var i = 0; i < arr1.length; i++){
 			for(var j = 0; j < arr2.length; j++){
-				if(arr1.name === arr2.name){
-					newArr.push(angular.extend({}, arr1, arr2));
-					console.log(newArr);
-					
+				if(arr1[i].name === arr2[j].name){
+					newArr.push(angular.extend(arr1[i], arr1[i], arr2[j]));
 				}
 			}
 		}
+		return newArr;
 	}
 
 	function calculateGrammar() {
@@ -143,6 +130,7 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 			$scope.loadingPage = false;
 			$scope.speechScore = true;
 			$scope.calculatedScore = d;
+			mergeArrays($scope.calculatedScore, $scope.uploadFiles);
 		});
 	}
 
@@ -156,7 +144,7 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 			else{
 				data.failedRow = {
 					'background-color': 'red',
-					'border-color': 'red'
+					'color': 'white'
 				}
 			}
 		}, timeout);
@@ -166,6 +154,8 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 		$scope.speechScore = false;
 		$scope.uploadForm = true;
 		$scope.checkMark = false;
+		$scope.enablePrediction = false;
+		
 	}
 
 	function formatBytes(bytes,decimals) {
