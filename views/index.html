@@ -85,38 +85,40 @@
         <!-- <span></span> -->
         
         <span ng-if="scoreSpinner" us-spinner="{radius:30, width:8, length: 16}"></span>
-        <div class="outer-table-page" ng-show="speechScore">
-            <label class="score-label">Smart Speech Score</label>
-            <table class="score-table">
-                <thead>
-                    <tr>
-                        <th>File Name</th>
-                        <th>Polarity</th>
-                        <th>Grammar</th>
-                        <th>Fluency</th>
-                        <th>Actual Grade</th>
-                        <th>Predicted Grade</th>
-                        <th>Prediction Accuracy</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-style="data.failedRow" ng-repeat="data in calculatedScore">
-                        <td>{{data.name}}</td>
-                        <td>{{data.polarityScore}}</td>
-                        <td>{{data.grammarScore}}</td>
-                        <td>{{data.fluencyScore}}</td>
-                        <td>{{data.actualGrade}}</td>
-                        <td ng-init="stopGradeSpinner(data, $index)">
-                        <span ng-if="!data.gradeSpinner" class="spinner" us-spinner="{radius:8, width:3, length: 6}"></span>
-                        <span ng-if="data.gradeSpinner">{{data.predictedGrade}}</span>
-                        </td>
-                        <td style="background-color: white">
-                            <img ng-show="data.passed" src="/lib/images/correct-symbol.svg" class="check" />
-                            <img ng-show="data.failedRow" src="/lib/images/remove-symbol.svg" class="check" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div ng-show="speechScore">
+            <div class="outer-table-page">
+                <label class="score-label">Smart Speech Score</label>
+                <table class="score-table">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Polarity</th>
+                            <th>Grammar</th>
+                            <th>Fluency</th>
+                            <th>Actual Grade</th>
+                            <th>Predicted Grade</th>
+                            <th>Prediction Accuracy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-style="data.failedRow" ng-repeat="data in calculatedScore">
+                            <td>{{data.name}}</td>
+                            <td>{{data.polarityScore}}</td>
+                            <td>{{data.grammarScore}}</td>
+                            <td>{{data.fluencyScore}}</td>
+                            <td>{{data.actualGrade}}</td>
+                            <td ng-init="stopGradeSpinner(data, $index)">
+                            <span ng-if="!data.gradeSpinner" class="spinner" us-spinner="{radius:8, width:3, length: 6}"></span>
+                            <span ng-if="data.gradeSpinner">{{data.predictedGrade}}</span>
+                            </td>
+                            <td style="background-color: white">
+                                <img ng-show="data.passed" src="/lib/images/correct-symbol.svg" class="check" />
+                                <img ng-show="data.failedRow" src="/lib/images/remove-symbol.svg" class="check" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <span class="probability">Overall Accuracy: 84.7%</span>
             <button ng-click="goBack()" class="button back">Go Back</button>
         </div>
