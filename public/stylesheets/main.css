@@ -1,7 +1,8 @@
 ﻿html{
     background: linear-gradient(black, #003366);
     background-repeat: no-repeat;
-    height: 100%;
+    height: auto;
+    min-height: 100%;
     /* color: aliceblue; */
 }
 
@@ -183,7 +184,8 @@ body {
 .position-button{
     float: right;
     position: relative;
-    top: 30px;
+    margin-bottom: 30px;
+    margin-top: 30px;
     padding: 20px;
 }
 
