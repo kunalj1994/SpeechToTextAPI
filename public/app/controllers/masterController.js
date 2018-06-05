@@ -74,7 +74,6 @@ app.controller('masterCtrl', function($scope, Upload, masterService, $q, $timeou
 				$scope.enablePrediction = true;
 			}, 1500);
 		});
-		// calculatePolarity();
 	}
 
 	function mergeArrays(arr1, arr2){

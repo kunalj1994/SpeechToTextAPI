@@ -60,7 +60,7 @@ body {
 
 .upload{
     display: inline-block;
-    margin-left: 20em;
+    margin-left: 8em;
 }
 
 .upload-icon{
@@ -80,10 +80,10 @@ body {
 
 .drag-drop{
     display: inline-block;
-    padding-right: 12em;
+    padding-right: 8em;
     border-right: 2px solid rgba(64, 64, 64, 0.6); 
     line-height: 160px;
-    margin-left: -8em;
+    margin-left: -3em;
     
     /* border-radius: 20px; */
 }
