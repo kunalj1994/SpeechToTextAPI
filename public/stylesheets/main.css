@@ -132,6 +132,7 @@ body {
     height: auto;
     border: 1px solid black;
     background-color: rgb(189, 215, 238);
+    margin-bottom: 10px;
 }
 
 .score-label{
@@ -197,8 +198,8 @@ body {
     position: relative;
     font-size: 20px;
     font-weight: 500;
-    top: 4.6em;
-    left: 35em;
+    /* top: 4.6em; */
+    left: 30em;
     background-color: #1aff1a;
     /* color: #f5f5f5; */
     padding: 20px;
@@ -207,8 +208,8 @@ body {
 
 .back{
     position: relative;
-    top: 4.6em;
-    right: 14em;
+    /* top: 4.6em; */
+    right: 13.2em;
 }
 
 .disabled{
